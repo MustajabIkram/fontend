@@ -7,7 +7,7 @@ import './Main.css';
 export default function Main() {
   const [file, setFile] = useState(null);
   const [data, setData] = useState(null);
-
+  const [uploaded, setUploaded] = useState(0);
   function handleTemplate(event) {
     if (!event.target.files) return;
     setFile(event.target.files[0]);
@@ -19,29 +19,30 @@ export default function Main() {
   }
 
   async function handleGenerate() {
+    setUploaded(1);
     const formData = new FormData();
     formData.append('file', file);
     formData.append('data', data);
     await axios
-      .post('https://simple-backend-ffmw.vercel.app/api/upload', formData)
+      .post('http://localhost:8080/api/upload', formData)
       .then((res) => {
-        console.log(res.statusText);
+        const isPosted = res.data.isPosted;
+        isPosted ? setUploaded(2) : setUploaded(3);
       });
   }
 
   function handleDownload() {
-    fetch('https://simple-backend-ffmw.vercel.app/api/download').then(
-      (response) => {
-        response.blob().then((blob) => {
-          // let url = window.URL.createObjectURL(blob);
-          // let a = document.createElement('a');
-          // a.href = url;
-          // a.download = 'a.txt';
-          // a.click();
-          download(blob);
-        });
-      }
-    );
+    fetch('http://localhost:8080/api/download').then((response) => {
+      response.blob().then((blob) => {
+        // let url = window.URL.createObjectURL(blob);
+        // let a = document.createElement('a');
+        // a.href = url;
+        // a.download = 'a.txt';
+        // a.click();
+        setUploaded(0);
+        download(blob);
+      });
+    });
   }
 
   return (
@@ -82,13 +83,20 @@ export default function Main() {
           />
           <figcaption>Output Preview</figcaption>
         </figure>
-        <button type='button' onClick={handleGenerate}>
-          Upload Files
+        <button
+          type='button'
+          onClick={uploaded === 0 ? handleGenerate : handleDownload}
+        >
+          {uploaded === 0
+            ? 'Upload Your Files'
+            : uploaded === 1
+            ? 'Uploading...'
+            : 'Download'}
         </button>
-
+        {/* 
         <button type='button' onClick={handleDownload}>
           Download Result
-        </button>
+        </button> */}
       </div>
     </main>
   );
