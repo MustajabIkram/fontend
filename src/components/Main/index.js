@@ -32,7 +32,7 @@ export default function Main() {
     setUploaded(4);
     setTimeout(() => {
       setUploaded(3);
-    }, 30000);
+    }, 50000);
   }
 
   function handleDownload() {
@@ -98,7 +98,7 @@ export default function Main() {
             ? 'Uploading...'
             : uploaded === 3
             ? 'Download'
-            : 'Processing'}
+            : `Processing...`}
         </button>
         {/* 
         <button type='button' onClick={handleDownload}>
