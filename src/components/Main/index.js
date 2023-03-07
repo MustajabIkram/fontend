@@ -40,10 +40,11 @@ export default function Main() {
           // a.href = url;
           // a.download = 'a.txt';
           // a.click();
+          setUploaded(4);
           setTimeout(() => {
             setUploaded(0);
             download(blob);
-          }, 50000);
+          }, 30000);
         });
       }
     );
@@ -95,6 +96,8 @@ export default function Main() {
             ? 'Upload Your Files'
             : uploaded === 1
             ? 'Uploading...'
+            : uploaded === 4
+            ? 'Processing'
             : 'Download'}
         </button>
         {/* 
