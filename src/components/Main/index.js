@@ -24,7 +24,7 @@ export default function Main() {
     formData.append('file', file);
     formData.append('data', data);
     await axios
-      .post('http://localhost:8080/api/upload', formData)
+      .post('https://simple-backend-ffmw.vercel.app/api/upload', formData)
       .then((res) => {
         const isPosted = res.data.isPosted;
         isPosted ? setUploaded(2) : setUploaded(3);
@@ -32,17 +32,19 @@ export default function Main() {
   }
 
   function handleDownload() {
-    fetch('http://localhost:8080/api/download').then((response) => {
-      response.blob().then((blob) => {
-        // let url = window.URL.createObjectURL(blob);
-        // let a = document.createElement('a');
-        // a.href = url;
-        // a.download = 'a.txt';
-        // a.click();
-        setUploaded(0);
-        download(blob);
-      });
-    });
+    fetch('https://simple-backend-ffmw.vercel.app/api/download').then(
+      (response) => {
+        response.blob().then((blob) => {
+          // let url = window.URL.createObjectURL(blob);
+          // let a = document.createElement('a');
+          // a.href = url;
+          // a.download = 'a.txt';
+          // a.click();
+          setUploaded(0);
+          download(blob);
+        });
+      }
+    );
   }
 
   return (
