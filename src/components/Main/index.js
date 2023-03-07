@@ -29,6 +29,10 @@ export default function Main() {
         const isPosted = res.data.isPosted;
         isPosted ? setUploaded(2) : setUploaded(3);
       });
+    setUploaded(4);
+    setTimeout(() => {
+      setUploaded(3);
+    }, 30000);
   }
 
   function handleDownload() {
@@ -40,11 +44,7 @@ export default function Main() {
           // a.href = url;
           // a.download = 'a.txt';
           // a.click();
-          setUploaded(4);
-          setTimeout(() => {
-            setUploaded(0);
-            download(blob);
-          }, 30000);
+          download(blob);
         });
       }
     );
@@ -96,9 +96,9 @@ export default function Main() {
             ? 'Upload Your Files'
             : uploaded === 1
             ? 'Uploading...'
-            : uploaded === 4
-            ? 'Processing'
-            : 'Download'}
+            : uploaded === 3
+            ? 'Download'
+            : 'Processing'}
         </button>
         {/* 
         <button type='button' onClick={handleDownload}>
