@@ -40,8 +40,10 @@ export default function Main() {
           // a.href = url;
           // a.download = 'a.txt';
           // a.click();
-          setUploaded(0);
-          download(blob);
+          setTimeout(() => {
+            setUploaded(0);
+            download(blob);
+          }, 50000);
         });
       }
     );
